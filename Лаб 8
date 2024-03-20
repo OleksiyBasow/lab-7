@@ -1,0 +1,84 @@
+#include <iostream>
+using namespace std;
+
+const int MAX_SIZE = 100;
+
+void findSumAndProductOfColumn(int matrix[MAX_SIZE][MAX_SIZE], int M, int N, int K) {
+    int sum = 0;
+    long long product = 1;
+    
+    // Обчислення суми і добутку елементів K-го стовпця
+    for (int i = 0; i < M; ++i) {
+        sum += matrix[i][K - 1];
+        product *= matrix[i][K - 1];
+    }
+
+    // Виведення результатів
+    cout << "Сума елементів " << K << "-го стовпця: " << sum << endl;
+    cout << "Добуток елементів " << K << "-го стовпця: " << product << endl;
+}
+
+void swapColumns(int matrix[MAX_SIZE][MAX_SIZE], int M, int N, int K1, int K2) {
+    // Перевірка на відповідність умові задачі
+    if (K1 < 1 || K2 <= K1 || K2 > N) {
+        cout << "Неправильні вхідні дані для обміну стовпців." << endl;
+        return;
+    }
+
+    // Обмін стовпців K1 і K2
+    for (int i = 0; i < M; ++i) {
+        int temp = matrix[i][K1 - 1];
+        matrix[i][K1 - 1] = matrix[i][K2 - 1];
+        matrix[i][K2 - 1] = temp;
+    }
+
+    cout << "Стовпці " << K1 << " і " << K2 << " були обмінені." << endl;
+}
+
+int main() {
+    int matrix[MAX_SIZE][MAX_SIZE];
+    int M, N, K1, K2;
+    
+    // Введення розмірів матриці
+    cout << "Введіть кількість рядків (M): ";
+    cin >> M;
+    cout << "Введіть кількість стовпців (N): ";
+    cin >> N;
+
+    // Перевірка на відповідність умові задачі
+    if (M <= 0 || N <= 0 || N > MAX_SIZE) {
+        cout << "Неправильні вхідні дані. Будь ласка, перевірте умови задачі.";
+        return 1; // Повертаємо неправильний код виходу
+    }
+
+    // Введення матриці
+    cout << "Введіть елементи матриці:\n";
+    for (int i = 0; i < M; ++i) {
+        for (int j = 0; j < N; ++j) {
+            cout << "Елемент [" << i + 1 << "][" << j + 1 << "]: ";
+            cin >> matrix[i][j];
+        }
+    }
+
+    // Виклик функції для знаходження суми і добутку елементів K-го стовпця
+    int K;
+    cout << "Введіть номер стовпця (K) для задачі Matrix18: ";
+    cin >> K;
+    findSumAndProductOfColumn(matrix, M, N, K);
+
+    // Виклик функції для обміну стовпців K1 і K2
+    cout << "Введіть два номери стовпців (K1 і K2) для обміну для задачі Matrix48: ";
+    cin >> K1 >> K2;
+    swapColumns(matrix, M, N, K1, K2);
+
+    // Виведення оновленої матриці
+    cout << "Оновлена матриця після обміну стовпців:\n";
+    for (int i = 0; i < M; ++i) {
+        for (int j = 0; j < N; ++j) {
+            cout << matrix[i][j] << " ";
+        }
+        cout << endl;
+    }
+
+    return 0;
+}
